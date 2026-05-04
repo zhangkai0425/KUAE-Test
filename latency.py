@@ -91,7 +91,7 @@ def run_latency_test(d, mode="fp32", B=1, torch_compile=False):
     # 🚀 跑 benchmark
     mean_us, std_us = benchmark(model, events)
 
-    cycles = N * B
+    cycles = N * B / 3
 
     output = (
         f"d = {d}, mode = {mode}, "
@@ -110,7 +110,7 @@ def parse_args():
     
     parser.add_argument("--d", type=int, nargs="+", default=[3], help="list of d values, e.g. --d 3 5 7")
     parser.add_argument("--B", type=int, nargs="+", default=[1], help="list of batch sizes, e.g. --B 1 4")
-    parser.add_argument("--mode", type=str, nargs="+", default=["fp32"], choices=["fp32", "fp16"], help="precision mode")
+    parser.add_argument("--mode", type=str, nargs="+", default=["fp16"], choices=["fp32", "fp16"], help="precision mode")
     parser.add_argument("--torch-compile", action="store_true", help="whether to use torch.compile for optimization")
     
     return parser.parse_args()
